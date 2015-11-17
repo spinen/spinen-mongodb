@@ -1,0 +1,47 @@
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# Where and how to store data.
+storage:
+  dbPath: <%= @dbPath %>
+  journal:
+    enabled: <%= @enable_journaling %>
+
+#  engine:
+
+#  mmapv1:
+
+#  wiredTiger:
+
+# where to write logging data.
+systemLog:
+  destination: <%= @log_destination %>
+  logAppend: <%= @log_append %>
+  path: <%= "#{@Log_path}/#{@log_name}" %>
+  <% if (log_rotate)
+  	puts "logRotate:  #{@log_rotate_option}"
+  end %>
+
+# network interfaces
+net:
+  port: <%= @binding_port %>
+  bindIp: <%= @binding_ipaddress %>
+
+
+#processManagement:
+
+#security:
+
+#operationProfiling:
+
+#replication:
+
+#sharding:
+
+## Enterprise-Only Options:
+
+#auditLog:
+
+#snmp:
