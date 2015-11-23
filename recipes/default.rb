@@ -9,6 +9,7 @@
 
 include_recipe 'apt'
 
+# Add the official MongoDB Repo
 apt_repository 'mongodb-org-3.0' do
   uri 'http://repo.mongodb.org/apt/ubuntu'
   distribution 'trusty/mongodb-org/3.0'
@@ -18,7 +19,8 @@ apt_repository 'mongodb-org-3.0' do
   action :add
 end
 
-if node.default['mongodb']['installTools']
+# IF the user wants the dev tools, install everything, otherwise just the server and shell
+if node['mongodb']['install_tools']
   package 'mongodb-org' do
     action :install
   end
@@ -31,11 +33,13 @@ else
   end
 end
 
+# Enable and Start the service, also make sure chef can ref it later
 service 'mongod' do
   supports status: true, restart: true
   action [:start, :enable]
 end
 
+# push the mongoDB general configuration, restart mongod if changed
 template '/etc/mongod.conf' do
   source 'mongod.erb'
   owner 'root'
@@ -52,13 +56,7 @@ template '/etc/mongod.conf' do
     log_directory: node['mongodb']['log']['directory'],
     log_name: node['mongodb']['log']['file_name'],
     log_rotate: node['mongodb']['log']['rotate'],
-    log_rotate_option: node['mongodb']['log']['rotate_option']
+    log_rotate_option: node['mongodb']['log']['rotate_option'],
+    requires_auth: node['mongodb']['requires_authentication']
   )
 end
-
-# now we need to own the config file located at /etc/mongod.conf
-# we need to make attributes for storage and log locations as well
-# as the port and bindingIP
-
-# Do this kinda stuff maybe:
-# https://docs.mongodb.org/manual/administration/production-notes/
