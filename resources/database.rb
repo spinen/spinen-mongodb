@@ -3,6 +3,8 @@ property :authentication, [TrueClass, FalseClass], default: false
 property :username, String, default: 'user'
 property :password, String, default: 'changeme'
 property :name_collection, String, default: 'name'
+property :mongodb_host, String, default: 'localhost'
+property :mongodb_port, String, default: '27017'
 
 
 
@@ -10,7 +12,7 @@ action :create do
 
   ruby_block 'create_the_database' do
     block do
-      my_database = Mongo::Client.new([node['mongodb']['binding']['ipaddress'] + ':' + node['mongodb']['binding']['port']], :database => name)
+      my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name)
       result = my_database[name_collection].insert_one({name: name})
     end
   end
