@@ -12,15 +12,35 @@ action :create do
 
   ruby_block 'create_the_database' do
     block do
-      my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name)
-      result = my_database[name_collection].insert_one({name: name})
-    end
-  end
 
+      if (authentication)
+        my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name, :user => username, :password => password)
+      else
+        my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name)
+      end
+
+      result = my_database[name_collection].insert_one({name: name})
+
+    end
+
+  end
 end
 
 action :drop do
 
-end
+  ruby_block 'drop_the_database' do
+    block do
 
-action :blah do
+      if (authentication)
+        my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name, :user => username, :password => password)
+      else
+        my_database = Mongo::Client.new(mongodb_host + ':' + mongodb_port], :database => name)
+      end
+      my_database.database.drop()
+
+    end
+
+  end
+
+
+end
