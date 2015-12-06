@@ -60,3 +60,15 @@ template '/etc/mongod.conf' do
     requires_auth: node['mongodb']['requires_authentication']
   )
 end
+
+
+# install dependencies for the mongo gem
+%w(ruby-dev gcc).each do |package_install|
+  package package_install do
+    action :nothing
+  end.run_action :install
+end
+
+#Install the mongo gem and then require it for future use
+chef_gem 'mongo'
+require 'mongo'
