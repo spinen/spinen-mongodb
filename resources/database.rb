@@ -14,7 +14,6 @@ action :create do
       else
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
       end
-
       my_database[name_collection].insert_one(name: name)
     end
   end
