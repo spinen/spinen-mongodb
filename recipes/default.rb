@@ -61,7 +61,6 @@ template '/etc/mongod.conf' do
   )
 end
 
-
 # install dependencies for the mongo gem
 %w(ruby-dev gcc).each do |package_install|
   package package_install do
@@ -69,6 +68,6 @@ end
   end.run_action :install
 end
 
-#Install the mongo gem and then require it for future use
+# Install the mongo gem and then require it for future use
 chef_gem 'mongo'
 require 'mongo'
