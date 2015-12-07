@@ -14,7 +14,9 @@ action :create do
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
       end
       
-      my_database[name_collection].insert_one({name: name})
+      existing_database_names = my_database.database_names
+
+      my_database[name_collection].insert_one({name: name}) unless existing_database_names.include? name
 
     end
   end

@@ -16,8 +16,15 @@ action :create do
       else
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database)
       end
-      new_collection = my_database[name]
-      new_collection.create()
+
+      database = my_database.database
+
+      unless database.collection_names.include? name
+        new_collection = my_database[name]
+        new_collection.create()
+      end
+
+
     end
   end
 end
