@@ -13,13 +13,15 @@ action :create do
       else
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
       end
-      my_database[name_collection].insert_one(name: name)
+      
+      my_database[name_collection].insert_one({name: name})
+
     end
   end
 end
 
 action :drop do
-  ruby_block 'drop_the_database' do
+  ruby_block name do
     block do
       if authentication
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password)
