@@ -1,4 +1,3 @@
-property :name, String, default: 'mydatabase'
 property :authentication, [TrueClass, FalseClass], default: false
 property :username, String, default: 'user'
 property :password, String, default: 'changeme'
@@ -7,7 +6,7 @@ property :mongodb_host, String, default: 'localhost'
 property :mongodb_port, String, default: '27017'
 
 action :create do
-  ruby_block 'create_the_database' do
+  ruby_block name do
     block do
       if authentication
         my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password)

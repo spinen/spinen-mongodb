@@ -71,3 +71,7 @@ end
 # Install the mongo gem and then require it for future use
 chef_gem 'mongo'
 require 'mongo'
+
+mongoDB_database 'testdb' do
+  action :create
+end
