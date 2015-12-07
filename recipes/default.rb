@@ -75,3 +75,9 @@ require 'mongo'
 mongoDB_database 'testdb' do
   action :create
 end
+
+
+mongoDB_collection 'mynewcollection' do
+  action :create
+  database 'testdb'
+end
