@@ -32,7 +32,10 @@ net:
 
 #processManagement:
 
-#security:
+<% if @requires_auth %>
+<%='security:' %>
+  <%='authorization: enabled' %>
+<% end %>
 
 #operationProfiling:
 

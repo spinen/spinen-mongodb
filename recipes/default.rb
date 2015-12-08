@@ -19,6 +19,17 @@ apt_repository 'mongodb-org-3.0' do
   action :add
 end
 
+# install dependencies for the mongo gem
+%w(ruby-dev gcc).each do |package_install|
+  package package_install do
+    action :nothing
+  end.run_action :install
+end
+
+# Install the mongo gem and then require it for future use
+chef_gem 'mongo'
+require 'mongo'
+
 # IF the user wants the dev tools, install everything, otherwise just the server and shell
 if node['mongodb']['install_tools']
   package 'mongodb-org' do
@@ -61,16 +72,25 @@ template '/etc/mongod.conf' do
   )
 end
 
-# install dependencies for the mongo gem
-%w(ruby-dev gcc).each do |package_install|
-  package package_install do
-    action :nothing
-  end.run_action :install
+
+
+ruby_block 'enable_authentication' do
+  block do
+    mongo_client = Mongo::Client.new([node['mongodb']['binding']['ipaddress'] + ':' + node['mongodb']['binding']['port']], database: 'admin')
+    mongo_client.database.users.create(node['mongodb']['user_admin_username'], password: node['mongodb']['user_admin_password'], roles: [ "userAdminAnyDatabase" ])
+    
+  end
+  only_if { node['mongodb']['requires_authentication'] }
 end
 
-# Install the mongo gem and then require it for future use
-chef_gem 'mongo'
-require 'mongo'
+
+
+
+
+
+
+
+
 
 mongoDB_database 'testdb' do
   action :create
