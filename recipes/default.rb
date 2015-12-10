@@ -73,31 +73,12 @@ template '/etc/mongod.conf' do
 end
 
 
-
 ruby_block 'enable_authentication' do
+  Chef::Log.info("We're going to try and create the useradmin, This should suceed ONLY the first run, and fail subsequently")
   block do
     mongo_client = Mongo::Client.new([node['mongodb']['binding']['ipaddress'] + ':' + node['mongodb']['binding']['port']], database: 'admin')
     mongo_client.database.users.create(node['mongodb']['user_admin_username'], password: node['mongodb']['user_admin_password'], roles: [ "userAdminAnyDatabase" ])
-    
   end
   only_if { node['mongodb']['requires_authentication'] }
-end
-
-
-
-
-
-
-
-
-
-
-mongoDB_database 'testdb' do
-  action :create
-end
-
-
-mongoDB_collection 'mynewcollection' do
-  action :create
-  database 'testdb'
+  ignore_failure true
 end
