@@ -9,14 +9,14 @@ action :create do
   ruby_block name do
     block do
       if authentication
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password)
+        mongo_db_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password, auth_source: 'admin')
       else
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
+        mongo_db_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
       end
       
-      existing_database_names = my_database.database_names
+      existing_database_names = mongo_db_client.database_names
 
-      my_database[name_collection].insert_one({name: name}) unless existing_database_names.include? name
+      mongo_db_client[name_collection].insert_one({name: name}) unless existing_database_names.include? name
 
     end
   end
@@ -26,11 +26,11 @@ action :drop do
   ruby_block name do
     block do
       if authentication
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password)
+        mongo_db_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name, user: username, password: password, auth_source: 'admin')
       else
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
+        mongo_db_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: name)
       end
-      my_database.database.drop
+      mongo_db_client.database.drop
     end
   end
 end

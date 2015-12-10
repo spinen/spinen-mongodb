@@ -12,15 +12,15 @@ action :create do
   ruby_block name do
     block do
       if authentication
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database, user: username, password: password)
+        mongo_collection_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database, user: username, password: password, auth_source: 'admin')
       else
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database)
+        mongo_collection_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database)
       end
 
-      database = my_database.database
+      database = mongo_collection_client.database
 
       unless database.collection_names.include? name
-        new_collection = my_database[name]
+        new_collection = mongo_collection_client[name]
         new_collection.create()
       end
 
@@ -34,11 +34,11 @@ action :drop do
   ruby_block name do
     block do
       if authentication
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database, user: username, password: password)
+        mongo_collection_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database, user: username, password: password, auth_source: 'admin')
       else
-        my_database = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database)
+        mongo_collection_client = Mongo::Client.new([mongodb_host + ':' + mongodb_port], database: database)
       end
-      new_collection = my_database[name]
+      new_collection = mongo_collection_client[name]
       new_collection.drop()
     end
   end
