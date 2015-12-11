@@ -24,13 +24,9 @@ default['mongodb']['log']['rotate']	           =	true
 default['mongodb']['log']['rotate_option']     =	'rename'
 
 # Shall we require auth?
-default['mongodb']['requires_authentication']  = true
+default['mongodb']['requires_authentication']  = false
 default['mongodb']['user_admin_username']      = 'useradmin'
 default['mongodb']['user_admin_password']      = 'abc123'
-default['mongodb']['user_object_list']         = [ { user: "testuser", pwd: "testuser", roles: [ { role: "readWrite", db: "testdb" } ] } ]
-
-# create_database recipe specific attributes
-default['mongodb']['database_name']            = 'newDB'
 
 # standard convention is to use the name collection
 # to create the database, use something else if you wish.
