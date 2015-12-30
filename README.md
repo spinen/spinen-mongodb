@@ -12,7 +12,7 @@ This cookbook depends on the following community cookbook:
 
 Attributes
 ----------
-#### mongoDB::default
+#### spinen-mongoDB::default
 <table>
   <tr>
     <th>Key</th>
