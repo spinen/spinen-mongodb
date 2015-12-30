@@ -96,7 +96,7 @@ This Cookbook includes 3 new resources for your mongodb needs:
 ##### Example
 
 ```ruby
-spinen-mongoDB_database 'testdb' do
+spinen_mongoDB_database 'testdb' do
   action :create
   authentication true
   username 'rootuser'
@@ -126,7 +126,7 @@ end
 ##### Example
 
 ```ruby
-spinen-mongoDB_collection 'myreallycoolcollection' do
+spinen_mongoDB_collection 'myreallycoolcollection' do
   action :create
   authentication true
   username 'fancyuser'
@@ -158,7 +158,7 @@ end
 ##### Example
 
 ```ruby
-spinen-mongoDB_user 'lreimer' do
+spinen_mongoDB_user 'lreimer' do
   action :create
   useradmin_username 'myUserAdmin'
   useradmin_password 'myAdminPass'
@@ -169,7 +169,7 @@ end
 ```
 
 ```ruby
-spinen-mongoDB_user 'lreimer' do
+spinen_mongoDB_user 'lreimer' do
   action :create
   useradmin_username 'myUserAdmin'
   useradmin_password 'myAdminPass'
