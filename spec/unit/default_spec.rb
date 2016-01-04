@@ -1,10 +1,10 @@
 require 'spec_helper.rb'
 
-describe 'mongoDB::default' do
+describe 'spinen-mongoDB::default' do
   let(:chef_run) do
     ChefSpec::ServerRunner.new do |node|
       node.set['mongodb']['install_tools'] = true
-    end.converge('mongoDB::default')
+    end.converge('spinen-mongoDB::default')
   end
 
   it 'includes the apt cookbook' do
@@ -37,11 +37,11 @@ describe 'mongoDB::default' do
   end
 end
 
-describe 'mongoDB::default' do
+describe 'spinen-mongoDB::default' do
   let(:chef_run) do
     ChefSpec::ServerRunner.new do |node|
       node.set['mongodb']['install_tools'] = false
-    end.converge('mongoDB::default')
+    end.converge('spinen-mongoDB::default')
   end
 
   it 'only installs server and shell when requested' do

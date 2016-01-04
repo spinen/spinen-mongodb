@@ -12,7 +12,7 @@ This cookbook depends on the following community cookbook:
 
 Attributes
 ----------
-#### mongoDB::default
+#### spinen-mongoDB::default
 <table>
   <tr>
     <th>Key</th>
@@ -96,7 +96,7 @@ This Cookbook includes 3 new resources for your mongodb needs:
 ##### Example
 
 ```ruby
-mongoDB_database 'testdb' do
+spinen_mongoDB_database 'testdb' do
   action :create
   authentication true
   username 'rootuser'
@@ -126,7 +126,7 @@ end
 ##### Example
 
 ```ruby
-mongoDB_collection 'myreallycoolcollection' do
+spinen_mongoDB_collection 'myreallycoolcollection' do
   action :create
   authentication true
   username 'fancyuser'
@@ -158,7 +158,7 @@ end
 ##### Example
 
 ```ruby
-mongoDB_user 'lreimer' do
+spinen_mongoDB_user 'lreimer' do
   action :create
   useradmin_username 'myUserAdmin'
   useradmin_password 'myAdminPass'
@@ -169,7 +169,7 @@ end
 ```
 
 ```ruby
-mongoDB_user 'lreimer' do
+spinen_mongoDB_user 'lreimer' do
   action :create
   useradmin_username 'myUserAdmin'
   useradmin_password 'myAdminPass'

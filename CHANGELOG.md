@@ -1,5 +1,9 @@
-mongoDB CHANGELOG
+spinen mongoDB CHANGELOG
 =================
+
+0.1.2
+-----
+- Stephen Antalis - Rename cookbook to spinen-mongoDB
 
 0.1.1
 -----

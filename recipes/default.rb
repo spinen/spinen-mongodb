@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: mongoDB
+# Cookbook Name:: spinen-mongoDB
 # Recipe:: default
 #
 # Copyright 2015, Specialized Information Environments, INC.
